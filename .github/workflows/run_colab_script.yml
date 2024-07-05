@@ -1,0 +1,27 @@
+name: Run Colab Script
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # Ejecutar todos los días a la 1 AM UTC
+  workflow_dispatch:
+
+jobs:
+  run-colab-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install gspread pandas numpy scikit-learn google-auth google-auth-oauthlib google-auth-httplib2
+
+    - name: Run the Colab script
+      run: python nombre_de_tu_script.py
